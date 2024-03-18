@@ -15,23 +15,43 @@ def roma_to_arabic(roma):
         prev_value = current_value
     return arabic_num
 
+def arabic_to_roma(arabic_num):
+    roman_numerals = {1: 'I', 4: 'IV', 5: 'V', 9: 'IX', 10: 'X', 40: 'XL', 50: 'L', 90: 'XC', 100: 'C', 400: 'CD', 500: 'D', 900: 'CM', 1000: 'M'}
+    result = ''
+    for value, numeral in sorted(roman_numerals.items(), reverse=True):
+        while arabic_num >= value:
+            result += numeral
+            arabic_num -= value
+    return result
+
 def cevir_butonu_tiklandi():
-    roma_input = giris_kutusu.get().upper()
-    arabic_num = roma_to_arabic(roma_input)
-    if arabic_num is not None:
+    giris = giris_kutusu.get().strip()
+    if giris.isdigit():  # Girilen değer normal bir sayı ise
+        arabic_num = int(giris)
         if 1 <= arabic_num <= 4999:
+            roma_rakami = arabic_to_roma(arabic_num)
             ekran_alani.delete(0.0, END)
-            ekran_alani.insert(0.0, str(arabic_num))
+            ekran_alani.insert(0.0, roma_rakami)
         else:
             ekran_alani.delete(0.0, END)
-            ekran_alani.insert(0.0, "Hatalı Giriş! 1 ile 4999 arasında bir Roma rakamı girin.")
-    else:
-        ekran_alani.delete(0.0, END)
-        ekran_alani.insert(0.0, "Hatalı Giriş! Geçersiz Roma rakamı.")
+            ekran_alani.insert(0.0, "Hatalı Giriş! 1 ile 4999 arasında bir sayı girin.")
+    else:  # Girilen değer Roma rakamı ise
+        roma_input = giris.upper()
+        arabic_num = roma_to_arabic(roma_input)
+        if arabic_num is not None:
+            if 1 <= arabic_num <= 4999:
+                ekran_alani.delete(0.0, END)
+                ekran_alani.insert(0.0, str(arabic_num))
+            else:
+                ekran_alani.delete(0.0, END)
+                ekran_alani.insert(0.0, "Hatalı Giriş! 1 ile 4999 arasında bir Roma rakamı girin.")
+        else:
+            ekran_alani.delete(0.0, END)
+            ekran_alani.insert(0.0, "Hatalı Giriş! Geçersiz Roma rakamı veya sayı.")
 
 pencere = Tk()
 pencere.geometry("300x200")
-pencere.title("Roma Rakamı Çevirici")
+pencere.title("Roma Rakamı / Sayı Çevirici")
 
 giris_etiketi = Label(text="Giriş:", font=("Arial", 12))
 giris_etiketi.pack()
