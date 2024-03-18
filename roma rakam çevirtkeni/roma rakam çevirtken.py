@@ -65,5 +65,4 @@ cevir_butonu.pack()
 ekran_alani = Text(width=30, height=5, font=("Arial", 12))
 ekran_alani.pack()
 
-
 pencere.mainloop()
