@@ -27,7 +27,7 @@ def temizle():
     metin_basligi.insert("1.0", "Başlık Giriniz")
     metin_alani.delete("1.0", "end")
 
-# Arayüzüm
+# Arayüz
 root = Tk()
 root.title("Hızlı Okuma Metin Dönüştürücü")
 
